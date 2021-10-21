@@ -2,7 +2,7 @@ const { Model, DataTypes } = require('sequelize');
 
 const sequelize = require('../config/connection');
 
-const Product = require('./Product');
+const Merchandise = require('./Product');
 const Tag = require('./Tag');
 
 class ProductTag extends Model {}
@@ -19,7 +19,7 @@ ProductTag.init(
       type: DataTypes.INTEGER,
       onDelete: 'SET NULL',
       references: {
-        model: Product,
+        model: Merchandise,
         key: 'id',
       }
     },
@@ -31,7 +31,7 @@ ProductTag.init(
         key: 'id',
       }
     },
-    // define columns
+    
   },
   {
     sequelize,

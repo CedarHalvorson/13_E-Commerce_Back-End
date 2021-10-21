@@ -11,7 +11,7 @@ Tag.init(
       allowNull: false,
       primaryKey: true,
       autoIncrement: true,
-    // define columns
+  
   },
 
   tag_name: {

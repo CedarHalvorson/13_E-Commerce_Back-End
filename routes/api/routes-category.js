@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Category, Product } = require('../../models');
+const { Category, Merchandise} = require('../../models');
 
 
 
@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
     const dataCategory = await Category.findAll({
       include: [
         {
-          model: Product,
+          model: Merchandise,
         }
       ]
     });
@@ -28,7 +28,7 @@ router.get('/:id', async (req, res) => {
     const dataCategory = await Category.findByPk(req.params.id, {
       include: [
         {
-          model: Product,
+          model: Merchandise,
         }
       ]
     });

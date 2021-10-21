@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Tag, Product, ProductTag } = require('../../models');
+const { Tag, Merchandise, ProductTag } = require('../../models');
 
 
 router.get('/', async (req, res) => {
@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
     const tagInfo = await Tag.findAll({
       include: [
         {
-          model: Product,
+          model: Merchandise,
           through: ProductTag,
         }
       ],
@@ -26,7 +26,7 @@ router.get('/:id', async (req, res) => {
     const tagInfo = await Tag.findByPk(req.params.id, {
       include: [
         {
-          model: Product,
+          model: Merchandise,
           through: ProductTag,
         }],});
 

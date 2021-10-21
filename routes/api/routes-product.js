@@ -1,11 +1,11 @@
 const router = require('express').Router();
-const { Product, Category, Tag, ProductTag } = require('../../models');
+const { Merchandise, Category, Tag, ProductTag } = require('../../models');
 
 
 router.get('/', async (req, res) => {
  
   try {
-    const productInfo = await Product.findAll({
+    const productInfo = await Merchandise.findAll({
       include: [
         {
           model: Category,
@@ -25,8 +25,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
  
   try {
-    // const productInfo = await Product.findByPk(req.params.id,
-      const productInfo = Product.findOne({where:{id: req.body.id}, 
+      const productInfo = Merchandise.findOne({where:{id: req.body.id}, 
       include: [
         {
           model: Category,
@@ -52,8 +51,8 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
   
-  Product.create(req.body)
-    .then((product) => {
+  Merchandise.create(req.body)
+    .then((Merchandise) => {
    
       if (req.body.tagIds.length) {
         const productTagIdArr = req.body.tagIds.map((tag_id) => {
@@ -65,7 +64,7 @@ router.post('/', async (req, res) => {
         return ProductTag.bulkCreate(productTagIdArr);
       }
     
-      res.status(202).json(product);
+      res.status(202).json(Merchandise);
     })
     .then((productTagIds) => res.status(202).json(productTagIds))
     .catch((err) => {
@@ -77,13 +76,13 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   
-  Product.update(req.body, {
+  Merchandise.update(req.body, {
     where: {
       id: req.params.id,
     },
   })
-    .then((product) => {
-      console.log(product)
+    .then((Merchandise) => {
+      console.log(Merchandise)
      
       return ProductTag.findAll({ where: { product_id: req.params.id } });
     })
@@ -118,14 +117,13 @@ router.put('/:id', async (req, res) => {
 });
 
 router.delete('/:id', async (req, res) => {
-  // delete one product by its `id` value
   try {
-    const dataCategory = await Product.destroy({
+    const dataCategory = await Merchandise.destroy({
       where: {
         id: req.params.id
       }
     });
-    if (!dataCategory) {
+    if(productInfo === undefined || productInfo === null){
       res.status(404).json({ message: 'No existence here!' });
       return;
     }
