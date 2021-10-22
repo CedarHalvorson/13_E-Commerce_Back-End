@@ -2,9 +2,9 @@ const { Model, DataTypes } = require('sequelize');
 
 const sequelize = require('../config/connection.js');
 
-class Category extends Model {}
+class Section extends Model {}
 
-Category.init(
+Section.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -27,4 +27,4 @@ Category.init(
   }
 );
 
-module.exports = Category;
+module.exports = Section;

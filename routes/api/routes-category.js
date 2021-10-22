@@ -1,11 +1,11 @@
 const router = require('express').Router();
-const { Category, Merchandise} = require('../../models');
+const { Section, Merchandise} = require('../../models');
 
 
 
 router.get('/', async (req, res) => {
   try {
-    const dataCategory = await Category.findAll({
+    const dataCategory = await Section.findAll({
       include: [
         {
           model: Merchandise,
@@ -25,18 +25,19 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   
   try {
-    const dataCategory = await Category.findByPk(req.params.id, {
+    const dataCategory = await Section.findByPk(req.params.id, {
       include: [
         {
           model: Merchandise,
         }
       ]
     });
-    if (!dataCategory) {
-      res.status(404).json({ message: 'this does not exist' });
+    if ( dataCategory === undefined || dataCategory === null){
+    
+      res.status(400).json({ message: 'this does not exist' });
       return;
     }
-    res.status(200).json(dataCategory);
+    res.status(202).json(dataCategory);
   } catch (err) {
     console.log('error in categories: ', err)
     res.status(500).json(err);
@@ -47,11 +48,11 @@ router.post('/', async (req, res) => {
   
   try {
     console.log(req.body);
-    const dataCategory = await Category.create(req.body);
+    const dataCategory = await Section.create(req.body);
 
-    res.status(200).json(dataCategory);
+    res.status(202).json(dataCategory);
   } catch (err) {
-    res.status(400).json(err);
+    res.status(404).json(err);
   }
 });
   
@@ -59,7 +60,7 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
   
   try {
-    const dataCategory = await Category.update(
+    const dataCategory = await Section.update(
       {
         category_name: req.body.category_name,
       },
@@ -70,7 +71,8 @@ router.put('/:id', async (req, res) => {
       },
     );
 
-    if (!dataCategory) {
+    if ( dataCategory === undefined || dataCategory === null){
+    
       res.status(404).json({ message: 'this does not exist' });
       return;
     }
@@ -83,13 +85,14 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
 
   try {
-    const dataCategory = await Category.destroy({
+    const dataCategory = await Section.destroy({
       where: {
         id: req.params.id
 
       }
     });
-    if (!dataCategory) {
+    if ( dataCategory === undefined || dataCategory === null){
+    
       res.status(404).json({ message: 'this does not exist' });
       return;
     }

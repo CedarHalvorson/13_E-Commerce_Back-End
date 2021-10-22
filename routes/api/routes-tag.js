@@ -30,7 +30,8 @@ router.get('/:id', async (req, res) => {
           through: ProductTag,
         }],});
 
-    if (!tagInfo) {
+        if (tagInfo === undefined || tagInfo === null){
+    
       res.status(404).json({ message: 'No existo!' });
       return;}
     res.status(200).json(tagInfo);
@@ -67,7 +68,8 @@ router.put('/:id', async (req, res) => {
       }
     });
 
-    if (!tagInfo) {
+    if (tagInfo === undefined || tagInfo === null){
+    // if (!tagInfo) {
       res.status(404).json({ message: 'You have come to the land of nah!' });
       return;
     }
@@ -84,7 +86,8 @@ router.delete('/:id', async (req, res) => {
       }
     });
 
-    if (!tagInfo) {
+    if (tagInfo === undefined || tagInfo === null){
+    // if (!tagInfo) {
       res.status(404).json({ message: "You're not allowed to go there!" });
       return;
     }

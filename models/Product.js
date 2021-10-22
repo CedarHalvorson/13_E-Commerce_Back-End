@@ -2,7 +2,7 @@ const { Model, DataTypes } = require('sequelize');
 
 const sequelize = require('../config/connection');
 
-const Category = require('./Category');
+const Section = require('./Category');
 
 
 class Merchandise extends Model {}
@@ -40,7 +40,7 @@ Merchandise.init(
       type: DataTypes.INTEGER,
       onDelete: 'SET NULL',
       references: {
-        model: Category,
+        model: Section,
         key: 'id',
       }
     }

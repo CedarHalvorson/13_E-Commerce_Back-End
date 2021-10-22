@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Merchandise, Category, Tag, ProductTag } = require('../../models');
+const { Merchandise, Section, Tag, ProductTag } = require('../../models');
 
 
 router.get('/', async (req, res) => {
@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
     const productInfo = await Merchandise.findAll({
       include: [
         {
-          model: Category,
+          model: Section,
         }, 
         {
           model: Tag,
@@ -28,7 +28,7 @@ router.get('/:id', async (req, res) => {
       const productInfo = Merchandise.findOne({where:{id: req.body.id}, 
       include: [
         {
-          model: Category,
+          model: Section,
         }, 
         {
           model: Tag,
@@ -37,7 +37,7 @@ router.get('/:id', async (req, res) => {
       ]
     });
 
-    // if (!productInfo) {
+    
       if(productInfo === undefined || productInfo === null){
       res.status(404).json({ message: "this doesn't exist" });
       return;
@@ -123,7 +123,8 @@ router.delete('/:id', async (req, res) => {
         id: req.params.id
       }
     });
-    if(productInfo === undefined || productInfo === null){
+    
+    if(dataCategory === undefined || dataCategory === null){
       res.status(404).json({ message: 'No existence here!' });
       return;
     }
