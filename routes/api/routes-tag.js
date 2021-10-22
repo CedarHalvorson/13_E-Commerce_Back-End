@@ -2,23 +2,7 @@ const router = require('express').Router();
 const { Tag, Merchandise, ProductTag } = require('../../models');
 
 
-router.get('/', async (req, res) => {
 
-  try {
-    const tagInfo = await Tag.findAll({
-      include: [
-        {
-          model: Merchandise,
-          through: ProductTag,
-        }
-      ],
-});
-res.status(200).json(tagInfo);
-} catch (err) {
-  res.status(500).json(err);
-}
-
-});
 
 router.get('/:id', async (req, res) => {
   
@@ -41,9 +25,43 @@ router.get('/:id', async (req, res) => {
 
 
 
+  router.get('/', async (req, res) => {
 
+    try {
+      const tagInfo = await Tag.findAll({
+        include: [
+          {
+            model: Merchandise,
+            through: ProductTag,
+          }
+        ],
+  });
+  res.status(200).json(tagInfo);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+  
+  });
 
-
+  router.delete('/:id', async (req, res) => {
+    try {
+      const tagInfo = await Tag.destroy({
+        where: {
+          id: req.params.id
+        }
+      });
+  
+      if (tagInfo === undefined || tagInfo === null){
+      
+        res.status(404).json({ message: "You're not allowed to go there!" });
+        return;
+      }
+      res.status(200).json(tagInfo);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  });
+  
 
 
 router.post('/', async (req, res) => {
@@ -69,26 +87,8 @@ router.put('/:id', async (req, res) => {
     });
 
     if (tagInfo === undefined || tagInfo === null){
-    // if (!tagInfo) {
+    
       res.status(404).json({ message: 'You have come to the land of nah!' });
-      return;
-    }
-    res.status(200).json(tagInfo);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-router.delete('/:id', async (req, res) => {
-  try {
-    const tagInfo = await Tag.destroy({
-      where: {
-        id: req.params.id
-      }
-    });
-
-    if (tagInfo === undefined || tagInfo === null){
-    // if (!tagInfo) {
-      res.status(404).json({ message: "You're not allowed to go there!" });
       return;
     }
     res.status(200).json(tagInfo);
